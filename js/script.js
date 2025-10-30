@@ -49,25 +49,44 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 currentMarkers.push(marker);
 
-                // Adiciona item na lista da barra lateral
+                // Cria o item da lista
                 const listItem = document.createElement('li');
-                listItem.textContent = displayName;
                 listItem.dataset.index = index; // Usar índice para referência, se necessário
                 
-                // Adiciona evento de clique para centralizar no marcador e mostrar detalhes na sidebar
+                // Adiciona o nome do local
+                const locationNameSpan = document.createElement('span');
+                locationNameSpan.textContent = displayName;
+                listItem.appendChild(locationNameSpan);
+
+                // Cria o container para os detalhes (imagem e endereço completo)
+                const detailsContainer = document.createElement('div');
+                detailsContainer.classList.add('location-item-details');
+                detailsContainer.classList.add('hidden'); // Esconde por padrão
+
+                const detailImage = document.createElement('img');
+                detailImage.src = imageUrl;
+                detailImage.alt = displayName;
+                detailImage.style.maxWidth = '100%';
+                detailImage.style.height = 'auto';
+                detailImage.style.borderRadius = '4px';
+                detailImage.style.marginTop = '10px';
+                detailsContainer.appendChild(detailImage);
+
+                const detailAddress = document.createElement('p');
+                detailAddress.textContent = fullAddress;
+                detailAddress.style.fontSize = '0.9em';
+                detailAddress.style.color = '#555';
+                detailAddress.style.lineHeight = '1.4';
+                detailsContainer.appendChild(detailAddress);
+
+                listItem.appendChild(detailsContainer);
+
+                // Adiciona evento de clique para centralizar no marcador e toggle dos detalhes
                 listItem.addEventListener('click', () => {
                     map.setView([location.latitude, location.longitude], 15);
                     marker.openPopup();
-                    
-                    // Exibe detalhes na nova seção da sidebar
-                    const detailImage = document.getElementById('detail-image');
-                    const detailAddress = document.getElementById('detail-address');
-                    const locationDetails = document.getElementById('location-details');
-
-                    detailImage.src = imageUrl;
-                    detailImage.alt = displayName;
-                    detailAddress.textContent = fullAddress;
-                    locationDetails.classList.remove('hidden');
+                    detailsContainer.classList.toggle('hidden');
+                    listItem.classList.toggle('active');
                 });
 
                 locationListElement.appendChild(listItem);
@@ -79,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('address.json')
         .then(response => response.json())
         .then(locations => {
-            allLocations = locations; // Armazena todos os locais
+            allLocations = locations;
             
             const validLatLngs = [];
             allLocations.forEach(loc => {

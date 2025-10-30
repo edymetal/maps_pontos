@@ -65,29 +65,35 @@ body, html {
     z-index: 500;
 }
 
-/* Detalhes do Local */
-#location-details {
-    margin-top: 20px;
-    padding-top: 20px;
+/* Estilo para o item da lista ativo */
+#location-list li.active {
+    background-color: #e0e0e0;
+    font-weight: bold;
+}
+
+/* Estilos para os detalhes dentro de cada item da lista */
+.location-item-details {
+    padding-top: 10px;
+    margin-top: 10px;
     border-top: 1px solid #eee;
     text-align: center;
 }
 
-#location-details.hidden {
+.location-item-details.hidden {
     display: none;
 }
 
-#detail-image {
+.location-item-details img {
     max-width: 100%;
     height: auto;
-    border-radius: 8px;
-    margin-bottom: 10px;
+    border-radius: 4px;
+    margin-bottom: 5px;
 }
 
-#detail-address {
-    font-size: 0.9em;
-    color: #555;
-    line-height: 1.4;
+.location-item-details p {
+    font-size: 0.85em;
+    color: #666;
+    line-height: 1.3;
 }
 
 /* Responsividade para telas menores */

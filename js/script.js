@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let allLocations = []; // Armazena todos os locais carregados
     let currentMarkers = []; // Armazena os marcadores atualmente no mapa
+    let activeDetailsContainer = null; // Rastreia o container de detalhes atualmente aberto
+    let activeListItemElement = null; // Rastreia o elemento <li> atualmente ativo
 
     const locationListElement = document.getElementById('location-list');
     const filterInput = document.getElementById('filter-input');
@@ -19,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Limpa a lista de locais
         locationListElement.innerHTML = '';
+        activeDetailsContainer = null; // Reseta o container ativo ao atualizar a lista
+        activeListItemElement = null; // Reseta o item ativo ao atualizar a lista
 
         locationsToDisplay.forEach((location, index) => {
             // Verifica se latitude e longitude existem
@@ -85,8 +89,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 listItem.addEventListener('click', () => {
                     map.setView([location.latitude, location.longitude], 15);
                     marker.openPopup();
+
+                    // Lógica de acordeão
+                    if (activeDetailsContainer && activeDetailsContainer !== detailsContainer) {
+                        activeDetailsContainer.classList.add('hidden');
+                        activeListItemElement.classList.remove('active');
+                    }
+
                     detailsContainer.classList.toggle('hidden');
                     listItem.classList.toggle('active');
+
+                    if (!detailsContainer.classList.contains('hidden')) {
+                        activeDetailsContainer = detailsContainer;
+                        activeListItemElement = listItem;
+                    } else {
+                        activeDetailsContainer = null;
+                        activeListItemElement = null;
+                    }
                 });
 
                 locationListElement.appendChild(listItem);

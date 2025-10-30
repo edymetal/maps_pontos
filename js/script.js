@@ -1,0 +1,116 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const map = L.map('map').setView([-14.235, -51.925], 4);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    let allLocations = []; // Armazena todos os locais carregados
+    let currentMarkers = []; // Armazena os marcadores atualmente no mapa
+
+    const locationListElement = document.getElementById('location-list');
+    const filterInput = document.getElementById('filter-input');
+
+    // Função para limpar marcadores e lista e adicionar novos
+    const updateMapAndList = (locationsToDisplay) => {
+        // Limpa marcadores existentes
+        currentMarkers.forEach(marker => map.removeLayer(marker));
+        currentMarkers = [];
+
+        // Limpa a lista de locais
+        locationListElement.innerHTML = '';
+
+        locationsToDisplay.forEach((location, index) => {
+            // Verifica se latitude e longitude existem
+            if (location.latitude && location.longitude) {
+                const fullAddress = `${location.street}, ${location.city}, ${location.province}, ${location.postal_code}, ${location.country}`;
+                const displayName = `${location.city} (${location.street})`;
+                const imageUrl = location.image_url || 'https://via.placeholder.com/50/CCCCCC/000000?text=NoImg'; // Imagem padrão se não houver
+
+                // Conteúdo do pop-up com miniatura da imagem
+                const popupContent = `
+                    <div>
+                        <b>${displayName}</b><br>
+                        <img src="${imageUrl}" alt="${displayName}" style="width:50px; height:50px; object-fit:cover; margin-top:5px;"><br>
+                        ${fullAddress}
+                    </div>
+                `;
+
+                // Adiciona marcador no mapa
+                const marker = L.marker([location.latitude, location.longitude])
+                    .addTo(map)
+                    .bindPopup(popupContent);
+                
+                // Adiciona evento de clique ao marcador para centralizar e abrir pop-up
+                marker.on('click', () => {
+                    map.setView([location.latitude, location.longitude], 15);
+                    marker.openPopup();
+                });
+                
+                currentMarkers.push(marker);
+
+                // Adiciona item na lista da barra lateral
+                const listItem = document.createElement('li');
+                listItem.textContent = displayName;
+                listItem.dataset.index = index; // Usar índice para referência, se necessário
+                
+                // Adiciona evento de clique para centralizar no marcador e mostrar detalhes na sidebar
+                listItem.addEventListener('click', () => {
+                    map.setView([location.latitude, location.longitude], 15);
+                    marker.openPopup();
+                    
+                    // Exibe detalhes na nova seção da sidebar
+                    const detailImage = document.getElementById('detail-image');
+                    const detailAddress = document.getElementById('detail-address');
+                    const locationDetails = document.getElementById('location-details');
+
+                    detailImage.src = imageUrl;
+                    detailImage.alt = displayName;
+                    detailAddress.textContent = fullAddress;
+                    locationDetails.classList.remove('hidden');
+                });
+
+                locationListElement.appendChild(listItem);
+            }
+        });
+    };
+
+    // Carrega os dados do address.json
+    fetch('address.json')
+        .then(response => response.json())
+        .then(locations => {
+            allLocations = locations; // Armazena todos os locais
+            
+            const validLatLngs = [];
+            allLocations.forEach(loc => {
+                if (loc.latitude && loc.longitude) {
+                    validLatLngs.push([loc.latitude, loc.longitude]);
+                }
+            });
+
+            if (validLatLngs.length > 0) {
+                // Ajusta a visão do mapa para englobar todos os marcadores
+                map.fitBounds(L.latLngBounds(validLatLngs));
+            } else {
+                // Se não houver locais válidos, mantém a visão padrão do Brasil
+                map.setView([-14.235, -51.925], 4);
+            }
+
+            updateMapAndList(allLocations); // Exibe todos os locais inicialmente
+        })
+        .catch(error => {
+            console.error('Erro ao carregar o arquivo de endereços:', error);
+        });
+
+    // Event listener para o campo de filtro
+    filterInput.addEventListener('input', (event) => {
+        const searchTerm = event.target.value.toLowerCase();
+        const filteredLocations = allLocations.filter(location => 
+            (location.street && location.street.toLowerCase().includes(searchTerm)) ||
+            (location.city && location.city.toLowerCase().includes(searchTerm)) ||
+            (location.province && location.province.toLowerCase().includes(searchTerm)) ||
+            (location.country && location.country.toLowerCase().includes(searchTerm))
+        );
+        updateMapAndList(filteredLocations);
+    });
+});

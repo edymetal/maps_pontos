@@ -1,0 +1,102 @@
+[
+  {
+    "street": "Via Roma, 15",
+    "city": "Palermo",
+    "province": "PA",
+    "postal_code": "90133",
+    "country": "Italy",
+    "latitude": 38.1157,
+    "longitude": 13.3615,
+    "image_url": "img/palermo.jpeg"
+  },
+  {
+    "street": "Corso Vittorio Emanuele, 101",
+    "city": "Catania",
+    "province": "CT",
+    "postal_code": "95124",
+    "country": "Italy",
+    "latitude": 37.5020,
+    "longitude": 15.0870,
+    "image_url": "img/catania.jpeg"
+  },
+  {
+    "street": "Piazza Duomo, 5",
+    "city": "Syracuse",
+    "province": "SR",
+    "postal_code": "96100",
+    "country": "Italy",
+    "latitude": 37.0750,
+    "longitude": 15.2930,
+    "image_url": "img/syracuse.jpeg"
+  },
+  {
+    "street": "Via dei Greci, 22",
+    "city": "Agrigento",
+    "province": "AG",
+    "postal_code": "92100",
+    "country": "Italy",
+    "latitude": 37.2990,
+    "longitude": 13.5830,
+    "image_url": "img/agrigento.jpeg"
+  },
+  {
+    "street": "Corso Umberto I, 250",
+    "city": "Taormina",
+    "province": "ME",
+    "postal_code": "98039",
+    "country": "Italy",
+    "latitude": 37.8510,
+    "longitude": 15.2850,
+    "image_url": "img/taormina.jpeg"
+  },
+  {
+    "street": "Via Garibaldi, 87",
+    "city": "Trapani",
+    "province": "TP",
+    "postal_code": "91100",
+    "country": "Italy",
+    "latitude": 37.9830,
+    "longitude": 12.5160,
+    "image_url": "img/trapani.jpeg"
+  },
+  {
+    "street": "Viale della Vittoria, 12",
+    "city": "Ragusa",
+    "province": "RG",
+    "postal_code": "97100",
+    "country": "Italy",
+    "latitude": 36.9250,
+    "longitude": 14.7250,
+    "image_url": "img/ragusa.jpeg"
+  },
+  {
+    "street": "Via Cavour, 45",
+    "city": "Marsala",
+    "province": "TP",
+    "postal_code": "91025",
+    "country": "Italy",
+    "latitude": 37.8000,
+    "longitude": 12.4330,
+    "image_url": "img/marsala.jpeg"
+  },
+  {
+    "street": "Piazza San Pietro, 1",
+    "city": "Modica",
+    "province": "RG",
+    "postal_code": "97015",
+    "country": "Italy",
+    "latitude": 36.8570,
+    "longitude": 14.7650,
+    "image_url": "img/modica.jpeg"
+  },
+  {
+    "street": "Via Etnea, 314",
+    "city": "Catania",
+    "province": "CT",
+    "postal_code": "95129",
+    "country": "Italy",
+    "latitude": 37.5070,
+    "longitude": 15.0830,
+    "image_url": "img/catania2.jpeg"
+  }
+]

@@ -1,0 +1,108 @@
+/* Reset básico e fontes */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Container principal com Flexbox */
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Barra lateral para filtros e lista */
+.sidebar {
+    width: 350px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.sidebar h1 {
+    font-size: 1.5em;
+    margin-top: 0;
+}
+
+#filter-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#location-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#location-list li {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#location-list li:hover {
+    background-color: #e9e9e9;
+}
+
+#location-list li:last-child {
+    border-bottom: none;
+}
+
+/* Contêiner do mapa */
+#map {
+    flex-grow: 1; /* O mapa ocupa o restante do espaço */
+    height: 100%;
+    z-index: 500;
+}
+
+/* Detalhes do Local */
+#location-details {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    text-align: center;
+}
+
+#location-details.hidden {
+    display: none;
+}
+
+#detail-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+#detail-address {
+    font-size: 0.9em;
+    color: #555;
+    line-height: 1.4;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: 40vh; /* Altura da barra lateral em telas pequenas */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    #map {
+        height: 60vh; /* Altura do mapa em telas pequenas */
+    }
+}

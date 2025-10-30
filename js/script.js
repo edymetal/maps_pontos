@@ -77,7 +77,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 detailsContainer.appendChild(detailImage);
 
                 const detailAddress = document.createElement('p');
-                detailAddress.textContent = fullAddress;
+                detailAddress.innerHTML = `
+                    <strong>Rua:</strong> ${location.street}<br>
+                    <strong>Cidade:</strong> ${location.city}<br>
+                    <strong>Província:</strong> ${location.province}<br>
+                    <strong>CEP:</strong> ${location.postal_code}<br>
+                    <strong>País:</strong> ${location.country}
+                `;
                 detailAddress.style.fontSize = '0.9em';
                 detailAddress.style.color = '#555';
                 detailAddress.style.lineHeight = '1.4';
